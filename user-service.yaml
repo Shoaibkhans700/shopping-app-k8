@@ -14,7 +14,7 @@ spec:
       containers:
         - name: user-service
           # Build & push this image first - see README "Build & push images".
-          image: your-registry/user-service:latest
+          image: 641379500030.dkr.ecr.ap-south-1.amazonaws.com/shop/shopping-app:user-service-14
           ports: [{ containerPort: 4001 }]
           env:
             - { name: PORT, value: "4001" }
