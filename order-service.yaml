@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: 641379500030.dkr.ecr.ap-south-1.amazonaws.com/shop/shopping-app:order-service-14
+          image: 641379500030.dkr.ecr.ap-south-1.amazonaws.com/shop/shopping-app:order-service-16
           ports: [{ containerPort: 4003 }]
           env:
             - { name: PORT, value: "4003" }

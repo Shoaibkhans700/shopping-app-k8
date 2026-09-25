@@ -15,7 +15,7 @@ spec:
         - name: frontend
           # Built with --build-arg VITE_API_BASE_URL pointing at the
           # ingress host below - see README.
-          image: 641379500030.dkr.ecr.ap-south-1.amazonaws.com/shop/shopping-app:frontend-14
+          image: 641379500030.dkr.ecr.ap-south-1.amazonaws.com/shop/shopping-app:frontend-16
           ports: [{ containerPort: 80 }]
           resources:
             requests: { cpu: "25m", memory: "32Mi" }
