@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: ecommerce
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: user-service }
+  template:
+    metadata:
+      labels: { app: user-service }
+    spec:
+      containers:
+        - name: user-service
+          # Build & push this image first - see README "Build & push images".
+          image: your-registry/user-service:latest
+          ports: [{ containerPort: 4001 }]
+          env:
+            - { name: PORT, value: "4001" }
+            - name: NODE_ENV
+              valueFrom: { configMapKeyRef: { name: ecommerce-config, key: NODE_ENV } }
+            - name: DB_HOST
+              valueFrom: { configMapKeyRef: { name: ecommerce-config, key: DB_HOST_USER } }
+            - name: DB_PORT
+              valueFrom: { configMapKeyRef: { name: ecommerce-config, key: DB_PORT } }
+            - name: DB_NAME
+              valueFrom: { configMapKeyRef: { name: ecommerce-config, key: USER_DB_NAME } }
+            - { name: DB_USER, value: "userservice" }
+            - name: DB_PASSWORD
+              valueFrom: { secretKeyRef: { name: ecommerce-secrets, key: POSTGRES_USER_DB_PASSWORD } }
+            - name: JWT_SECRET
+              valueFrom: { secretKeyRef: { name: ecommerce-secrets, key: JWT_SECRET } }
+            - name: JWT_EXPIRES_IN
+              valueFrom: { configMapKeyRef: { name: ecommerce-config, key: JWT_EXPIRES_IN } }
+          resources:
+            requests: { cpu: "50m", memory: "96Mi" }
+            limits: { cpu: "250m", memory: "256Mi" }
+          readinessProbe:
+            httpGet: { path: /health, port: 4001 }
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /health, port: 4001 }
+            initialDelaySeconds: 10
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: ecommerce
+spec:
+  selector: { app: user-service }
+  ports: [{ port: 4001, targetPort: 4001 }]
