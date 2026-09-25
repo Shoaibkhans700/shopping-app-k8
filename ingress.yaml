@@ -18,9 +18,16 @@ spec:
         number: 80
 
   rules:
-    - host: shop.ecommerce.local
-      http:
+    - http:
         paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api-gateway
+                port:
+                  number: 8080
+
           - path: /
             pathType: Prefix
             backend:
@@ -28,14 +35,3 @@ spec:
                 name: frontend
                 port:
                   number: 80
-
-    - host: api.ecommerce.local
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: api-gateway
-                port:
-                  number: 8080
