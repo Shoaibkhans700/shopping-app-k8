@@ -1,34 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
+kind: Application
 metadata:
   name: shopping-app
   namespace: argocd
 spec:
-  generators:
-    - git:
-        repoURL: https://github.com/Shoaibkhans700/shopping-app-k8.git
-        revision: main
-        directories:
-          - path: k8s/*
+  project: default
 
-  template:
-    metadata:
-      name: 'shopping-app-{{path.basename}}'
-    spec:
-      project: default
+  source:
+    repoURL: https://github.com/Shoaibkhans700/shopping-app-k8.git
+    targetRevision: main
+    path: k8s
 
-      source:
-        repoURL: https://github.com/Shoaibkhans700/shopping-app-k8.git
-        targetRevision: main
-        path: '{{path}}'
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: shopping-app
 
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: '{{path.basename}}'
-
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
