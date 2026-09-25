@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: your-registry/product-service:latest
+          image: 641379500030.dkr.ecr.ap-south-1.amazonaws.com/shop/shopping-app:product-service-14
           ports: [{ containerPort: 4002 }]
           env:
             - { name: PORT, value: "4002" }
