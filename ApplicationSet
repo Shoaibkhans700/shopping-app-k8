@@ -6,7 +6,7 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: https://github.com/YOUR_USERNAME/YOUR_K8S_REPO.git
+        repoURL: https://github.com/Shoaibkhans700/shopping-app-k8.git
         revision: main
         directories:
           - path: k8s/*
@@ -18,7 +18,7 @@ spec:
       project: default
 
       source:
-        repoURL: https://github.com/YOUR_USERNAME/YOUR_K8S_REPO.git
+        repoURL: https://github.com/Shoaibkhans700/shopping-app-k8.git
         targetRevision: main
         path: '{{path}}'
 
