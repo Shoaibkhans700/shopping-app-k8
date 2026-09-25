@@ -9,6 +9,13 @@ metadata:
     alb.ingress.kubernetes.io/healthcheck-path: /health
 spec:
   ingressClassName: alb
+
+  defaultBackend:
+    service:
+      name: frontend
+      port:
+        number: 80
+
   rules:
     - host: shop.ecommerce.local
       http:
